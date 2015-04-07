@@ -65,7 +65,7 @@ function processGeolocation(pos) {
     'ALTITUDE: '          + (pos.coords.altitude        !=null ? Math.floor(pos.coords.altitude) + 'm'     : "-") + '<br />' +
     'ACCURACY: '          + (pos.coords.accuracy        !=null ? pos.coords.accuracy             + 'm'     : "-") + '<br />' +
     'ALTITUDE ACCURACY: ' + (pos.coords.altitudeAccuracy!=null ? pos.coords.altitudeAccuracy     + 'm'     : "-") + '<br />' +
-    'HEADING: '           + (pos.coords.heading         !=null ? pos.coords.heading              + '&deg;' : "-") + '<br />' +
+    'HEADING: '           + (pos.coords.heading         !=null ? pos.coords.heading.toFixed(5)   + '&deg;' : "-") + '<br />' +
     'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed.toFixed(2)     + 'mph'   : "-") + '<br />' +
     'TIMESTAMP:'          + prettyTime(pos.timestamp)   + '<br />';
   map.setView([pos.coords.latitude, pos.coords.longitude], 30);
