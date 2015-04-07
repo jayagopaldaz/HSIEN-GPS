@@ -17,7 +17,6 @@ var app = {
   onDeviceReady: function() {
     app.receivedEvent('deviceready');
     init();
-    setInterval(function(){ if(myPos && map) map.setView([myPos.x, myPos.y], 30); }, 100);
   },
   // Update DOM on a Received Event
   receivedEvent: function(id) {
@@ -50,13 +49,17 @@ function init(){
     map = L.mapbox.map('map', 'jayagopal.llm4817k');
   }
   catch(e){ alert(e); }
+  //setInterval(function(){ if(myPos && map) map.setView([myPos.x, myPos.y], 30); }, 100);
+  setInterval(function(){ 
+    //if(myPos && map) map.setView([myPos.x, myPos.y], 30); 
+    document.getElementById('geolocation2').innerHTML='Current Time:' + prettyTime(Date.now()) + '<br />';
+  }, 1000);
 }
 
 //onSuccess Geolocation
 var myPos;
 function processGeolocation(pos) {
-  var element = document.getElementById('geolocation');
-  element.innerHTML = 
+  document.getElementById('geolocation').innerHTML = 
     'Latitude: '          + pos.coords.latitude         + '<br />' +
     'Longitude: '         + pos.coords.longitude        + '<br />' +
     'Altitude: '          + pos.coords.altitude         + '<br />' +
@@ -64,22 +67,13 @@ function processGeolocation(pos) {
     'Altitude Accuracy: ' + pos.coords.altitudeAccuracy + '<br />' +
     'Heading: '           + pos.coords.heading          + '<br />' +
     'Speed: '             + pos.coords.speed            + '<br />' +
-    'Timestamp:<br>'      + prettyTime(pos.timestamp)   + '<br />';
+    'Timestamp:'          + prettyTime(pos.timestamp)   + '<br />';
   map.setView([pos.coords.latitude, pos.coords.longitude], 30);
   myPos={x:pos.coords.latitude,y:pos.coords.longitude};
 }
+function geolocationError(error){}
+var gd;
+function prettyTime(d){ d=new Date(d); return d.toTimeString().split(" ")[0]; }
+//return d.toLocaleTimeString().replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
 
-//onError Callback receives a PositionError object
-function geolocationError(error) {
-  //alert('code: ' + error.code  + '\n' + 'message: ' + error.message + '\n');
-}
-
-function prettyTime(d) {
-  /*
-  h = (d.getHours()<10?'0':'') + d.getHours(),
-  m = (d.getMinutes()<10?'0':'') + d.getMinutes();
-  return h + ':' + m;
-  */
-  //return d.toLocaleTimeString().replace("/.*(\d{2}:\d{2}:\d{2}).*/", "$1");
-  return d.toTimeString().split(" ")[0];
-}
+if(document.URL=="http://127.0.0.1/HSIEN-GPS/www/"){ console.clear(); window.onload=init; }

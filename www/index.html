@@ -6,8 +6,8 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css' rel='stylesheet' />
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
     <title>GPS</title>
   </head>
@@ -27,6 +27,9 @@
       app.initialize();
     </script>
     <div id="map"></div>
+    <div id="targ" src="img/target.png"></div>
+    <script>document.getElementById('targ').style.marginLeft=(window.innerWidth/2-8)+'px';</script>
     <div id="geolocation"></div>
+    <div id="geolocation2"></div>
   </body>
 </html>
