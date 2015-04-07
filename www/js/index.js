@@ -60,14 +60,14 @@ function init(){
 var myPos;
 function processGeolocation(pos) {
   document.getElementById('geolocation').innerHTML = 
-    'LATITUDE: '          + (pos.coords.latitude        !=null ? pos.coords.latitude.toFixed(5)  + '&deg;' : "-") + '<br />' +
-    'LONGITUDE: '         + (pos.coords.longitude       !=null ? pos.coords.longitude.toFixed(5) + '&deg;' : "-") + '<br />' +
-    'ALTITUDE: '          + (pos.coords.altitude        !=null ? Math.floor(pos.coords.altitude) + 'm'     : "-") + '<br />' +
-    'ACCURACY: '          + (pos.coords.accuracy        !=null ? pos.coords.accuracy             + 'm'     : "-") + '<br />' +
-    'ALTITUDE ACCURACY: ' + (pos.coords.altitudeAccuracy!=null ? pos.coords.altitudeAccuracy     + 'm'     : "-") + '<br />' +
-    'HEADING: '           + (pos.coords.heading         !=null ? pos.coords.heading.toFixed(5)   + '&deg;' : "-") + '<br />' +
-    'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed.toFixed(2)     + 'mph'   : "-") + '<br />' +
-    'TIMESTAMP:'          + prettyTime(pos.timestamp)   + '<br />';
+    'LATITUDE: '          + (pos.coords.latitude        !=null ? pos.coords.latitude.toFixed(5)         + '&deg;' : "-") + '<br />' +
+    'LONGITUDE: '         + (pos.coords.longitude       !=null ? pos.coords.longitude.toFixed(5)        + '&deg;' : "-") + '<br />' +
+    'ALTITUDE: '          + (pos.coords.altitude        !=null ? Math.floor(pos.coords.altitude)        + 'm'     : "-") + '<br />' +
+    'ACCURACY: '          + (pos.coords.accuracy        !=null ? pos.coords.accuracy.toFixed(2)         + 'm'     : "-") + '<br />' +
+    'ALTITUDE ACCURACY: ' + (pos.coords.altitudeAccuracy!=null ? pos.coords.altitudeAccuracy.toFixed(2) + 'm'     : "-") + '<br />' +
+    'HEADING: '           + (pos.coords.heading!=NaN && pos.coords.headin!=null ? pos.coords.heading.toFixed(1) + '&deg;' : "-") + '<br />' +
+    'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed.toFixed(2)            + 'mph'   : "-") + '<br />' +
+    'TIMESTAMP:'          + prettyTime(pos.timestamp) + '<br />';
   map.setView([pos.coords.latitude, pos.coords.longitude], 30);
   myPos={x:pos.coords.latitude,y:pos.coords.longitude};
 }
