@@ -60,13 +60,13 @@ function init(){
 var myPos;
 function processGeolocation(pos) {
   document.getElementById('geolocation').innerHTML = 
-    'LATITUDE: '          + (pos.coords.latitude        !=null ? pos.coords.latitude         + '&deg;' : "-") + '<br />' +
-    'LONGITUDE: '         + (pos.coords.longitude       !=null ? pos.coords.longitude        + '&deg;' : "-") + '<br />' +
-    'ALTITUDE: '          + (pos.coords.altitude        !=null ? pos.coords.altitude         + 'm'     : "-") + '<br />' +
-    'ACCURACY: '          + (pos.coords.accuracy        !=null ? pos.coords.accuracy         + 'm'     : "-") + '<br />' +
-    'ALTITUDE ACCURACY: ' + (pos.coords.altitudeAccuracy!=null ? pos.coords.altitudeAccuracy + 'm'     : "-") + '<br />' +
-    'HEADING: '           + (pos.coords.heading         !=null ? pos.coords.heading          + '&deg;' : "-") + '<br />' +
-    'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed            + 'mph'   : "-") + '<br />' +
+    'LATITUDE: '          + (pos.coords.latitude        !=null ? pos.coords.latitude.toFixed(5)  + '&deg;' : "-") + '<br />' +
+    'LONGITUDE: '         + (pos.coords.longitude       !=null ? pos.coords.longitude.toFixed(5) + '&deg;' : "-") + '<br />' +
+    'ALTITUDE: '          + (pos.coords.altitude        !=null ? Math.floor(pos.coords.altitude) + 'm'     : "-") + '<br />' +
+    'ACCURACY: '          + (pos.coords.accuracy        !=null ? pos.coords.accuracy             + 'm'     : "-") + '<br />' +
+    'ALTITUDE ACCURACY: ' + (pos.coords.altitudeAccuracy!=null ? pos.coords.altitudeAccuracy     + 'm'     : "-") + '<br />' +
+    'HEADING: '           + (pos.coords.heading         !=null ? pos.coords.heading              + '&deg;' : "-") + '<br />' +
+    'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed.toFixed(2)     + 'mph'   : "-") + '<br />' +
     'TIMESTAMP:'          + prettyTime(pos.timestamp)   + '<br />';
   map.setView([pos.coords.latitude, pos.coords.longitude], 30);
   myPos={x:pos.coords.latitude,y:pos.coords.longitude};
