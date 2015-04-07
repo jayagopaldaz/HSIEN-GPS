@@ -60,13 +60,13 @@ function init(){
 var myPos;
 function processGeolocation(pos) {
   document.getElementById('geolocation').innerHTML = 
-    'Latitude: '          + pos.coords.latitude         + '<br />' +
-    'Longitude: '         + pos.coords.longitude        + '<br />' +
-    'Altitude: '          + pos.coords.altitude         + '<br />' +
-    'Accuracy: '          + pos.coords.accuracy         + '<br />' +
-    'Altitude Accuracy: ' + pos.coords.altitudeAccuracy + '<br />' +
-    'Heading: '           + pos.coords.heading          + '<br />' +
-    'Speed: '             + pos.coords.speed            + '<br />' +
+    'Latitude: '          + pos.coords.latitude         + '&deg;<br />' +
+    'Longitude: '         + pos.coords.longitude        + '&deg;<br />' +
+    'Altitude: '          + pos.coords.altitude         + 'm<br />' +
+    'Accuracy: '          + pos.coords.accuracy         + 'm<br />' +
+    'Altitude Accuracy: ' + pos.coords.altitudeAccuracy + 'm<br />' +
+    'Heading: '           + pos.coords.heading          + '&deg;<br />' +
+    'Speed: '             + pos.coords.speed            + 'mph<br />' +
     'Timestamp:'          + prettyTime(pos.timestamp)   + '<br />';
   map.setView([pos.coords.latitude, pos.coords.longitude], 30);
   myPos={x:pos.coords.latitude,y:pos.coords.longitude};
