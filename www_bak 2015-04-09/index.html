@@ -5,26 +5,31 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
     <title>GPS</title>
   </head>
   <body>
+    <div class="app">
+      <h1>GPS Test</h1>
+      <center>
+        <div id="deviceready" class="blink">
+          <p class="event listening">Connecting to Device</p>
+          <p class="event received">Device is Ready</p>
+        </div>
+      </center>
+    </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">app.initialize();</script>
-    <p><br><br><br>Loading...</p>
-    <div id=map></div>
-    <div id=targ></div>
-    <div id=self></div>
-    <div id=line class=line></div>
-    <div id=geolocation></div>
-    <div id=geolocation2></div>
-    <div id=controls>
-      <div id=pin  class=button onclick="if(playSet) return; flagSet=!flagSet; this.innerHTML=(flagSet ? '<p>Unpin Flag</p>' : '<p>Pin Flag</p>')"><p>Pin Flag</p></div>
-      <div id=play class=button onclick="if(!flagSet) return; playSet=!playSet; this.innerHTML='<p>Play</p>'"><p>Play</p></div>
-    </div>
+    <script type="text/javascript">
+      app.initialize();
+    </script>
+    <div id="map"></div>
+    <div id="targ" src="img/target.png"></div>
+    <script>document.getElementById('targ').style.marginLeft=(window.innerWidth/2-8)+'px';</script>
+    <div id="geolocation"></div>
+    <div id="geolocation2"></div>
   </body>
 </html>
