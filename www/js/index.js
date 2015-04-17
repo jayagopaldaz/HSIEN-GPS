@@ -1,11 +1,10 @@
 var myPos, flagPos;
 var watchId;
 var map;
-var targ,self;
+var targ,self,line,pin,play;
 var zoomed=false;
 var flagSet=false;
 var playSet=false;
-var line;
 
 var app = {
   initialize: function() { this.bindEvents(); },
@@ -15,10 +14,31 @@ var app = {
 };
 
 function init(){
+  initWs();
+  
   targ=document.getElementById('targ');
   self=document.getElementById('self');
   line=document.getElementById('line');
 
+  pin=document.getElementById('pin');
+  play=document.getElementById('play');
+  
+  pin.onclick=function(){
+    if(playSet) return; 
+    flagSet=!flagSet; 
+    ws.send(new Array(['flag',flagSet,flagPos.lat.toFixed(5),flagPos.lng.toFixed(5)]).join());
+    this.innerHTML=(flagSet ? '<p>Unpin Flag</p>' : '<p>Pin Flag</p>')
+  }
+  
+   play.onclick=function(){
+     if(!flagSet) return; 
+     playSet=!playSet; 
+     //ws.send(new Array(['play',playSet,myPos.lat.toFixed(5),myPos.lng.toFixed(5)]).join());
+     ws.send(new Array(['play',playSet]).join());
+     this.innerHTML='<p>Play</p>';
+   }
+
+  
   watchId = navigator.geolocation.watchPosition( processGeolocation, geolocationError, { timeout: 30000, enableHighAccuracy: true, maximumAge: 3000 } ); 
   //navigator.geolocation.clearWatch(watchID);
   
@@ -30,6 +50,7 @@ function init(){
 
   L.mapbox.accessToken = 'pk.eyJ1IjoiamF5YWdvcGFsIiwiYSI6IjhJdmoyNTAifQ.aJ31ee0IFzVsDVJrR_nsPg';
   map = L.mapbox.map('map', 'jayagopal.llm4817k');
+
   setInterval(function(){ document.getElementById('geolocation2').innerHTML='CURRENT TIME:' + prettyTime(Date.now()) + '<br />'; }, 1000);
   setInterval(function(){ 
     if(zoomed){
@@ -63,9 +84,12 @@ function init(){
         document.getElementById('play').innerHTML="<p>"+gap+"m</p>";
         if(gap<10){
           playSet=false;
+          flagSet=false;
           line.style.display="none"; 
+          play.innerHTML='<p>Play</p>';
+          pin.innerHTML='<p>Pin Flag</p>';
+          ws.send('win');
           alert("You WON!!!");
-          document.getElementById('play').innerHTML='<p>Play</p>';
         }
         
         gw=targxy.x-selfxy.x;
@@ -93,10 +117,11 @@ function processGeolocation(pos) {
     'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed.toFixed(2)            + 'mph'   : "-") + '<br />' +
     'TIMESTAMP:'          + prettyTime(pos.timestamp) + '<br />';
   myPos={lat:pos.coords.latitude,lng:pos.coords.longitude};
+  if(playSet) ws.send(new Array(['play',playSet,myPos.lat,myPos.lng]).join());
   if(!zoomed){
     map.setView(myPos,5);
     zoomed=true;
-    setTimeout(function(){ map.setZoom(19) }, 1500);
+    setTimeout(function(){ map.setZoom(15) }, 1500);
   }
 }
 

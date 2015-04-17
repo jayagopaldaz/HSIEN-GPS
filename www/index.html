@@ -9,11 +9,12 @@
     <link rel="stylesheet" type="text/css" href="https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.6/mapbox.js'></script>
+    <script type="text/javascript" src="cordova.js" ></script>
+    <script type="text/javascript" src="js/ws.js"   ></script>
+    <script type="text/javascript" src="js/index.js"></script>
     <title>GPS</title>
   </head>
   <body>
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">app.initialize();</script>
     <p><br><br><br>Loading...</p>
     <div id=map></div>
@@ -23,8 +24,8 @@
     <div id=geolocation></div>
     <div id=geolocation2></div>
     <div id=controls>
-      <div id=pin  class=button onclick="if(playSet) return; flagSet=!flagSet; this.innerHTML=(flagSet ? '<p>Unpin Flag</p>' : '<p>Pin Flag</p>')"><p>Pin Flag</p></div>
-      <div id=play class=button onclick="if(!flagSet) return; playSet=!playSet; this.innerHTML='<p>Play</p>'"><p>Play</p></div>
+      <div id=pin  class=button onclick="if(playSet) return; flagSet=!flagSet; ws.send('flag='+flagSet); this.innerHTML=(flagSet ? '<p>Unpin Flag</p>' : '<p>Pin Flag</p>')"><p>Pin Flag</p></div>
+      <div id=play class=button onclick="if(!flagSet) return; playSet=!playSet; ws.send('play='+playSet); this.innerHTML='<p>Play</p>'"><p>Play</p></div>
     </div>
   </body>
 </html>
