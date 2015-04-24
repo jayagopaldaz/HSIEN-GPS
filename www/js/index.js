@@ -5,6 +5,10 @@ var targ,self,line,pin,play;
 var zoomed=false;
 var flagSet=false;
 var playSet=false;
+var opp=[];
+var report=false;
+
+if(document.URL=="http://127.0.0.1/HSIEN-GPS/www/"){ console.clear(); window.onload=init; }
 
 var app = {
   initialize: function() { this.bindEvents(); },
@@ -19,6 +23,7 @@ function init(){
   targ=document.getElementById('targ');
   self=document.getElementById('self');
   line=document.getElementById('line');
+  oppDiv=document.getElementById('opp');
 
   pin=document.getElementById('pin');
   play=document.getElementById('play');
@@ -33,8 +38,8 @@ function init(){
    play.onclick=function(){
      if(!flagSet) return; 
      playSet=!playSet; 
-     //ws.send(new Array(['play',playSet,myPos.lat.toFixed(5),myPos.lng.toFixed(5)]).join());
-     ws.send(new Array(['play',playSet]).join());
+     ws.send(new Array(['play',playSet,myPos.lat.toFixed(5),myPos.lng.toFixed(5)]).join());
+     //ws.send(new Array(['play',playSet]).join());
      this.innerHTML='<p>Play</p>';
    }
 
@@ -51,7 +56,6 @@ function init(){
   L.mapbox.accessToken = 'pk.eyJ1IjoiamF5YWdvcGFsIiwiYSI6IjhJdmoyNTAifQ.aJ31ee0IFzVsDVJrR_nsPg';
   map = L.mapbox.map('map', 'jayagopal.llm4817k');
 
-  setInterval(function(){ document.getElementById('geolocation2').innerHTML='CURRENT TIME:' + prettyTime(Date.now()) + '<br />'; }, 1000);
   setInterval(function(){ 
     if(zoomed){
       if(!flagSet) flagPos=map.getCenter();
@@ -62,6 +66,15 @@ function init(){
       selfxy=map.latLngToContainerPoint(myPos);
       self.style.left=selfxy.x+"px";
       self.style.top=selfxy.y+"px";
+      
+      oppDiv.innerHTML="";
+      for(var i in opp){
+        oppxy=map.latLngToContainerPoint(opp[i]);
+        style="left:"+oppxy.x+"px; ";
+        style+="top:"+oppxy.y+"px; ";
+        style+="top:"+oppxy.y+"px; ";
+        oppDiv.innerHTML+="<div class=opp style='"+style+"'></div>";
+      }
       
       if(document.getElementById('map').firstChild.firstChild.firstChild.firstChild.style.cssText){
         targ.style.display="none"; 
@@ -106,18 +119,20 @@ function init(){
   }, 10);
 }
 
+setInterval(function(){
+  if(report) return;
+  try{ 
+    ws.send(new Array(['play',playSet,myPos.lat.toFixed(5),myPos.lng.toFixed(5)]).join()); 
+    report=true;
+  }
+  catch(e){}
+},1000);
+
 function processGeolocation(pos) {
-  document.getElementById('geolocation').innerHTML = 
-    'LATITUDE: '          + (pos.coords.latitude        !=null ? pos.coords.latitude.toFixed(5)         + '&deg;' : "-") + '<br />' +
-    'LONGITUDE: '         + (pos.coords.longitude       !=null ? pos.coords.longitude.toFixed(5)        + '&deg;' : "-") + '<br />' +
-    'ALTITUDE: '          + (pos.coords.altitude        !=null ? Math.floor(pos.coords.altitude)        + 'm'     : "-") + '<br />' +
-    'ACCURACY: '          + (pos.coords.accuracy        !=null ? pos.coords.accuracy.toFixed(2)         + 'm'     : "-") + '<br />' +
-    'ALTITUDE ACCURACY: ' + (pos.coords.altitudeAccuracy!=null ? pos.coords.altitudeAccuracy.toFixed(2) + 'm'     : "-") + '<br />' +
-    'HEADING: '           + (pos.coords.heading!=NaN && pos.coords.headin!=null ? pos.coords.heading.toFixed(1) + '&deg;' : "-") + '<br />' +
-    'SPEED: '             + (pos.coords.speed           !=null ? pos.coords.speed.toFixed(2)            + 'mph'   : "-") + '<br />' +
-    'TIMESTAMP:'          + prettyTime(pos.timestamp) + '<br />';
   myPos={lat:pos.coords.latitude,lng:pos.coords.longitude};
-  if(playSet) ws.send(new Array(['play',playSet,myPos.lat,myPos.lng]).join());
+  try{ ws.send(new Array(['play',playSet,myPos.lat.toFixed(5),myPos.lng.toFixed(5)]).join()); }
+  catch(e){}
+  
   if(!zoomed){
     map.setView(myPos,5);
     zoomed=true;
@@ -126,11 +141,9 @@ function processGeolocation(pos) {
 }
 
 function geolocationError(error){}
-function prettyTime(d){ d=new Date(d); return d.toTimeString().split(" ")[0]; }
 
-if(document.URL=="http://127.0.0.1/HSIEN-GPS/www/"){ console.clear(); window.onload=init; }
-
-function latlngToMeters(pos1, pos2) {var R = 6371000; // metres
+function latlngToMeters(pos1, pos2) {
+  var R = 6371000; // metres
   lat1=pos1.lat;
   lon1=pos1.lng;
   lat2=pos2.lat;
@@ -151,8 +164,4 @@ function latlngToMeters(pos1, pos2) {var R = 6371000; // metres
   return d;
 }
 
-if (typeof(Number.prototype.toRadians) === "undefined") {
-  Number.prototype.toRadians = function() {
-    return this * Math.PI / 180;
-  }
-}
+if (typeof(Number.prototype.toRadians) === "undefined"){ Number.prototype.toRadians = function(){ return this * Math.PI / 180; } }

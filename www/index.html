@@ -19,13 +19,12 @@
     <p><br><br><br>Loading...</p>
     <div id=map></div>
     <div id=targ></div>
+    <div id=opp></div>
     <div id=self></div>
     <div id=line class=line></div>
-    <div id=geolocation></div>
-    <div id=geolocation2></div>
     <div id=controls>
-      <div id=pin  class=button onclick="if(playSet) return; flagSet=!flagSet; ws.send('flag='+flagSet); this.innerHTML=(flagSet ? '<p>Unpin Flag</p>' : '<p>Pin Flag</p>')"><p>Pin Flag</p></div>
-      <div id=play class=button onclick="if(!flagSet) return; playSet=!playSet; ws.send('play='+playSet); this.innerHTML='<p>Play</p>'"><p>Play</p></div>
+      <div id=pin  class=button><p>Pin Flag</p></div>
+      <div id=play class=button><p>Play</p></div>
     </div>
   </body>
 </html>

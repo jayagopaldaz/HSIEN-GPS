@@ -40,25 +40,33 @@ body {
 }
 .leaflet-control-container{ display:none; }
 
-#targ,#self{
+#targ,#self,.opp{
   position:absolute;
   top:0px;
   left:0px;
-  margin-top:-8px;
-  margin-left:-8px;
-  width:16px;
-  height:16px;
-  border-radius:10px;
-  -webkit-border-radius:10px;
-  border:solid #000 1px;
+  margin-top:-4px;
+  margin-left:-4px;
+  width:8px;
+  height:8px;
+  border:solid #000 2px;
   background:rgba(255,0,0,.8);
   z-index:200;
 }
 
 #self{
+  margin-top:-8px;
+  margin-left:-8px;
+  width:16px;
+  height:16px;
+  background:rgba(0,255,0,.8);
+  border-radius:16px 0px 16px 16px;
+  -webkit-border-radius:16px 0px 16px 16px;
+}
+
+.opp{
   background:rgba(255,255,255,.8);
-  border-radius:10px 0px 10px 10px;
-  -webkit-border-radius:10px 0px 10px 10px;
+  border-radius:8px 8px 8px 8px;
+  -webkit-border-radius:8px 8px 8px 8px;
 }
 
 #controls{
